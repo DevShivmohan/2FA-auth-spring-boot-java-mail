@@ -1,8 +1,10 @@
 package com.mail.fa.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,9 +15,11 @@ import java.util.UUID;
 @Data
 public class User implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -3492266417550204992L;
 
     @Id
+    @Type(type="uuid-char")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
@@ -37,7 +41,6 @@ public class User implements Serializable {
 
     @PrePersist
     void setUp() {
-        this.id = UUID.randomUUID();
         this.createdAt = LocalDateTime.now(ZoneId.of("+00:00"));
     }
 
